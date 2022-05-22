@@ -1,0 +1,35 @@
+﻿<UserControl x:Class="ParfumeApp.HeaderControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ParfumeApp"
+             mc:Ignorable="d" 
+             d:DesignHeight="150" d:DesignWidth="800"
+             Background="{StaticResource AdditionalColor}">
+    <UserControl.Resources>
+        <Style TargetType="Image">
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="Margin" Value="5, 0" />
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="HorizontalAlignment" Value="Right" />
+            <Setter Property="Margin" Value="10, 40" />
+            <Setter Property="Width" Value="100" />
+        </Style>
+        <Style TargetType="StackPanel">
+            <Setter Property="Orientation" Value="Horizontal" />
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Image Source="/Resources/logo.png" />
+        <StackPanel x:Name="ButtonsStackPanel" Grid.Column="1" Visibility="Collapsed">
+            <Button Grid.Column="1" x:Name="AuthorizationButton" Content="На главную" Click="AuthorizationButton_Click" />
+            <Button Grid.Column="2" x:Name="BackButton" Content="Назад"  Click="BackButton_Click"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

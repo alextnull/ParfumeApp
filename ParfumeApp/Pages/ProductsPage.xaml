@@ -1,0 +1,110 @@
+﻿<Page x:Class="ParfumeApp.ProductsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ParfumeApp"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="ProductsPage">
+    <Page.Resources>
+        <local:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
+        <local:InvertNullToVisibilityConverter x:Key="InvertNullToVisibilityConverter"/>
+    </Page.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel>
+            <TextBlock x:Name="PagesTextBlock" />
+        </StackPanel>
+
+        <Grid x:Name="FilterGrid" Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <TextBox x:Name="SearchTextBox" Margin="10" TextChanged="SearchTextBox_TextChanged"/>
+            <ComboBox Margin="10" Grid.Column="1" SelectedIndex="0" x:Name="OrderPriceComboBox" SelectionChanged="OrderPriceComboBox_SelectionChanged">
+                <ComboBoxItem Content="По возрастанию цены" />
+                <ComboBoxItem Content="По убыванию цены" />
+            </ComboBox>
+
+            <ComboBox Margin="10" Grid.Column="2" SelectedIndex="0" x:Name="SaleComboBox" SelectionChanged="SaleComboBox_SelectionChanged">
+                <ComboBoxItem Content="Все диапазоны" />
+                <ComboBoxItem Content="Скидка 0-10%" />
+                <ComboBoxItem Content="Скидка 11-14%" />
+                <ComboBoxItem Content="Скидка 15% и более" />
+            </ComboBox>
+        </Grid>
+        
+        <ListView Grid.Row="2" x:Name="ProductsListView" VerticalAlignment="Stretch">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Height="100">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="200" />
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="200"/>
+                            </Grid.ColumnDefinitions>
+
+                        <Border BorderBrush="Black" BorderThickness="1" Margin="10, 0, 10, 0">
+                            <Grid>
+                                <Image Source="{Binding ActualPathImage}" Visibility="{Binding ActualPathImage, Converter={StaticResource InvertNullToVisibilityConverter}}"/>
+                                <Image Source="/Resources/picture.png" Visibility="{Binding ActualPathImage, Converter={StaticResource NullToVisibilityConverter}}"/>
+                            </Grid>
+
+                        </Border>
+
+                        <Border Grid.Column="1" BorderBrush="Black" BorderThickness="1" Margin="10, 0">
+                            <Grid HorizontalAlignment="Stretch" Margin="5">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <TextBlock Text="{Binding NameProducts}" FontWeight="Bold" />
+                                <TextBlock Grid.Row="1" Text="{Binding Description}" />
+                                <TextBlock Grid.Row="2">
+                                        <Run Text="Производитель: "/>
+                                        <Run Text="{Binding Manufactures.Title}"/>
+                                </TextBlock>
+                                <TextBlock Grid.Row="3">
+                                       <Run Text="Цена: "/>
+                                        <Run Text="{Binding Price}"/>
+                                </TextBlock>
+                            </Grid>
+                        </Border>
+
+                        <Border Grid.Column="2" BorderBrush="Black" BorderThickness="1" Margin="10, 0, 10, 0">
+                            <Grid HorizontalAlignment="Right" Grid.Column="2" Width="200">
+                                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding ActiveSale}" />
+                            </Grid>
+                        </Border>
+                     
+
+
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+        <StackPanel Grid.Row="3" VerticalAlignment="Bottom" HorizontalAlignment="Right" Orientation="Horizontal" >
+            <Button x:Name="PreviousPage" Content="Предыдущая стр" HorizontalAlignment="Right" Click="PreviousPage_Click"/>
+            <Button x:Name="NextPage" Content="Следующая стр" HorizontalAlignment="Right" Click="NextPage_Click"/>
+        </StackPanel>
+        
+    </Grid>
+</Page>
